@@ -1,28 +1,24 @@
-    <div class="row">
-        <div class="col-md-8 col-xs-10">
+<style>
+body{
+  background-color: #5bc0de;
+}
+</style>
+
+<div class="row">
+        <div class="col-md-12 col-xs-12">
             <div class="well panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 text-center">
-                            <img src="http://api.randomuser.me/portraits/women/21.jpg" alt="" class="center-block img-circle img-thumbnail img-responsive">
-                            <ul class="list-inline ratings text-center" title="Ratings">
-                                <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                            </ul>
+                            <img src="images/dp.png" alt="" class="center-block img-circle img-thumbnail img-responsive">
                         </div>
                         <!--/col-->
                         <div class="col-xs-12 col-sm-8">
-                            <h2><%=username%></h2>
-                            <p><strong>About: </strong> Web Designer / UI Expert. </p>
-                            <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-                            <p><strong>Skills: </strong>
-                                <span class="label label-info tags">html5</span>
-                                <span class="label label-info tags">css3</span>
-                                <span class="label label-info tags">jquery</span>
-                                <span class="label label-info tags">bootstrap3</span>
+                            <h2><%=username.toUpperCase()%></h2>
+                            <p><strong>Email: </strong><%=email%></p>
+                            <p><strong>Address: </strong><%=address%> </p>
+                            <p><strong>Phone: </strong>
+                                <%=phone%>
                             </p>
                         </div>
                         <!--/col-->

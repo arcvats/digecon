@@ -80,6 +80,19 @@ module.exports = {
       });
     },
 
+    roomDetails:function(req,res){
+      var params = req.allParams();
+      console.log(params.roomid);
+      console.log(req.session.username);
+
+      Room.findOne({createdBy:req.session.username}).where({roomId:params.roomid}).exec(function(err,data){
+        if(err){
+          return res.negotiate(err);
+        }
+        res.view('roomdetails',{username:data.createdBy,name:data.name,devices:data.devices});
+      });
+    },
+
     deleteRoom:function(req,res){
 
     }

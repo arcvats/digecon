@@ -10,7 +10,8 @@
       <div class="caption">
         <h3><%=rooms_data[0].name%></h3>
         <p>Created By: <%=rooms_data[0].createdBy%></p>
-        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room1')">Edit</button> <button class="btn btn-default">View</button></p>
+        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room1')">Edit</button>
+          <a class="btn btn-default" href="/roomDetails?roomid=room1">View</a></p>
       </div>
     </div>
   </div>
@@ -20,7 +21,8 @@
       <div class="caption">
         <h3><%=rooms_data[1].name%></h3>
         <p>Created By: <%=rooms_data[1].createdBy%></p>
-        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room2')">Edit</button> <button class="btn btn-default">View</button></p>
+        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room2')">Edit</button>
+          <a class="btn btn-default" href="/roomDetails?roomid=room2">View</a></p>
       </div>
     </div>
   </div>
@@ -30,7 +32,8 @@
       <div class="caption">
         <h3><%=rooms_data[2].name%></h3>
         <p>Created By: <%=rooms_data[2].createdBy%></p>
-        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room3')">Edit</button> <button class="btn btn-default">View</button></p>
+        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room3')">Edit</button>
+          <a class="btn btn-default" href="/roomDetails?roomid=room3">View</a></p>
       </div>
     </div>
   </div>
@@ -40,7 +43,8 @@
       <div class="caption">
         <h3><%=rooms_data[3].name%></h3>
         <p>Created By: <%=rooms_data[3].createdBy%></p>
-        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room4')">Edit</button> <button class="btn btn-default">View</button></p>
+        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Rooms.editroom('room4')">Edit</button>
+          <a href="/roomDetails?roomid=room4" class="btn btn-default" >View</a></p>
       </div>
     </div>
   </div>
@@ -150,6 +154,16 @@
     },
     editroom:function(roomid){
       document.getElementById('typetosend').setAttribute('value',roomid);
+    },
+    roomdetail:function(roomid){
+      aja()
+        .method('get')
+        .url('/roomDetails')
+        .data({roomId:roomid})
+        .on('200', function(response){
+
+        })
+        .go();
     }
   };
 </script>

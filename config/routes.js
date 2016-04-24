@@ -48,7 +48,9 @@ module.exports.routes = {
 
   'get /addRoom':'RoomController.addRoom',
 
-  'post /editRoom':'RoomController.editRoom'
+  'post /editRoom':'RoomController.editRoom',
+
+  'get /roomDetails':'RoomController.roomDetails'
 
   /***************************************************************************
   *                                                                          *

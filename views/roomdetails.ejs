@@ -1,0 +1,190 @@
+<div class="row" id="row">
+  <h3>Welcome <%=username.toUpperCase()%>. You are viewing <%=name%></h3>
+</div>
+<script>
+  (function(){
+    var devices = <%-JSON.stringify(devices)%>;
+    var row = document.getElementById('row');
+    for(var i=0;i<devices.length;i++){
+      if(devices[i]=='led10'||devices[i]=='led15'||devices[i]=='light100'||devices[i]=='light40'){
+        var ele1 = document.createElement('div');
+        ele1.setAttribute("class","col-sm-6 col-md-4");
+        row.appendChild(ele1);
+
+        var ele2 = document.createElement('div');
+        ele2.setAttribute("class","thumbnail");
+        ele1.appendChild(ele2);
+
+        var ele3 = document.createElement('img');
+        ele3.src = 'images/bulb.png';
+        ele3.alt = 'Light';
+        ele2.appendChild(ele3);
+
+        var ele4 = document.createElement('div');
+        ele4.setAttribute("class","caption");
+        ele2.appendChild(ele4);
+
+        var ele5 = document.createElement('h3');
+        ele5.innerHTML = devices[i].toUpperCase();
+        ele4.appendChild(ele5);
+
+        var ele6 = document.createElement('p');
+        ele6.innerHTML = 'The device is currently installed in your room';
+        ele4.appendChild(ele6);
+
+        var ele7 = document.createElement('p');
+        ele4.appendChild(ele7);
+
+        var ele8 = document.createElement('a');
+        ele8.href = "#";
+        ele8.setAttribute("class","btn btn-primary");
+        ele8.setAttribute("role","button");
+        ele8.innerHTML = "View";
+        ele7.appendChild(ele8);
+
+        var ele9 = document.createElement('a');
+        ele9.href = "#";
+        ele9.setAttribute("class","btn btn-default");
+        ele9.setAttribute("role","button");
+        ele9.innerHTML = "Delete";
+        ele7.appendChild(ele9);
+
+      }
+
+      if(devices[i]=='ac1'||devices[i]=='ac15'){
+
+        var ele1 = document.createElement('div');
+        ele1.setAttribute("class","col-sm-6 col-md-4");
+        row.appendChild(ele1);
+
+        var ele2 = document.createElement('div');
+        ele2.setAttribute("class","thumbnail");
+        ele1.appendChild(ele2);
+
+        var ele3 = document.createElement('img');
+        ele3.src = 'images/ac.png';
+        ele3.alt = 'Light';
+        ele2.appendChild(ele3);
+
+        var ele4 = document.createElement('div');
+        ele4.setAttribute("class","caption");
+        ele2.appendChild(ele4);
+
+        var ele5 = document.createElement('h3');
+        ele5.innerHTML = devices[i].toUpperCase();
+        ele4.appendChild(ele5);
+
+        var ele6 = document.createElement('p');
+        ele6.innerHTML = 'The device is currently installed in your room';
+        ele4.appendChild(ele6);
+
+        var ele7 = document.createElement('p');
+        ele4.appendChild(ele7);
+
+        var ele8 = document.createElement('a');
+        ele8.href = "#";
+        ele8.setAttribute("class","btn btn-primary");
+        ele8.setAttribute("role","button");
+        ele8.innerHTML = "View";
+        ele7.appendChild(ele8);
+
+        var ele9 = document.createElement('a');
+        ele9.href = "#";
+        ele9.setAttribute("class","btn btn-default");
+        ele9.setAttribute("role","button");
+        ele9.innerHTML = "Delete";
+        ele7.appendChild(ele9);
+      }
+
+      if(devices[i]=='fan'){
+        var ele1 = document.createElement('div');
+        ele1.setAttribute("class","col-sm-6 col-md-4");
+        row.appendChild(ele1);
+
+        var ele2 = document.createElement('div');
+        ele2.setAttribute("class","thumbnail");
+        ele1.appendChild(ele2);
+
+        var ele3 = document.createElement('img');
+        ele3.src = 'images/fan.png';
+        ele3.alt = 'Light';
+        ele2.appendChild(ele3);
+
+        var ele4 = document.createElement('div');
+        ele4.setAttribute("class","caption");
+        ele2.appendChild(ele4);
+
+        var ele5 = document.createElement('h3');
+        ele5.innerHTML = devices[i].toUpperCase();
+        ele4.appendChild(ele5);
+
+        var ele6 = document.createElement('p');
+        ele6.innerHTML = 'The device is currently installed in your room';
+        ele4.appendChild(ele6);
+
+        var ele7 = document.createElement('p');
+        ele4.appendChild(ele7);
+
+        var ele8 = document.createElement('a');
+        ele8.href = "#";
+        ele8.setAttribute("class","btn btn-primary");
+        ele8.setAttribute("role","button");
+        ele8.innerHTML = "View";
+        ele7.appendChild(ele8);
+
+        var ele9 = document.createElement('a');
+        ele9.href = "#";
+        ele9.setAttribute("class","btn btn-default");
+        ele9.setAttribute("role","button");
+        ele9.innerHTML = "Delete";
+        ele7.appendChild(ele9);
+      }
+
+      if(devices[i]=='tvled30'||devices[i]=='tvled42'||devices[i]=='tvlcd'){
+        var ele1 = document.createElement('div');
+        ele1.setAttribute("class","col-sm-6 col-md-4");
+        row.appendChild(ele1);
+
+        var ele2 = document.createElement('div');
+        ele2.setAttribute("class","thumbnail");
+        ele1.appendChild(ele2);
+
+        var ele3 = document.createElement('img');
+        ele3.src = 'images/tv.png';
+        ele3.alt = 'Light';
+        ele2.appendChild(ele3);
+
+        var ele4 = document.createElement('div');
+        ele4.setAttribute("class","caption");
+        ele2.appendChild(ele4);
+
+        var ele5 = document.createElement('h3');
+        ele5.innerHTML = devices[i].toUpperCase();
+        ele4.appendChild(ele5);
+
+        var ele6 = document.createElement('p');
+        ele6.innerHTML = 'The device is currently installed in your room';
+        ele4.appendChild(ele6);
+
+        var ele7 = document.createElement('p');
+        ele4.appendChild(ele7);
+
+        var ele8 = document.createElement('a');
+        ele8.href = "#";
+        ele8.setAttribute("class","btn btn-primary");
+        ele8.setAttribute("role","button");
+        ele8.innerHTML = "View";
+        ele7.appendChild(ele8);
+
+        var ele9 = document.createElement('a');
+        ele9.href = "#";
+        ele9.setAttribute("class","btn btn-default");
+        ele9.setAttribute("role","button");
+        ele9.innerHTML = "Delete";
+        ele7.appendChild(ele9);
+      }
+    }
+
+  })();
+</script>
+
