@@ -17,7 +17,14 @@ module.exports = {
                 return res.negotiate(err);
             }
             req.session.username=user.username;
-            res.view('profile',{username:user.username,email:user.email,address:user.address,phone:user.phone});
+          Room.count({createdBy:user.username}).exec(function(err,found_rooms){
+            Device.count({createdBy:user.username}).exec(function(err,found_devices){
+
+              res.view('profile',{username:user.username,email:user.email,address:user.address,phone:user.phone,roomsno:found_rooms,devicesno:found_devices});
+
+            });
+
+          });
         });
 
     },
@@ -53,8 +60,24 @@ module.exports = {
     },
 
     update:function(req,res){
+      var params = req.allParams();
+      User.findOne({username:params.username}).exec(function(err,data){
+        if(err){
+          return res.negotiate(err);
+        }
+        User.update({phone:data.phone},{phone:params.phone}).where({username:params.username}).exec(function(err,updated){
+          if(err){
+            return res.negotiate(err);
+          }
+          User.update({password:data.password},{password:params.password}).where({username:params.username}).exec(function(err,updates){
+            if(err){
+              return res.negotiate(err);
+            }
+          });
+        });
 
-
+      });
+      res.redirect('/login');
     },
 
     logout:function(req,res){
