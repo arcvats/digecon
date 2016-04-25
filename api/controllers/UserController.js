@@ -17,16 +17,28 @@ module.exports = {
                 return res.negotiate(err);
             }
             req.session.username=user.username;
-          Room.count({createdBy:user.username}).exec(function(err,found_rooms){
-            Device.count({createdBy:user.username}).exec(function(err,found_devices){
-
-              res.view('profile',{username:user.username,email:user.email,address:user.address,phone:user.phone,roomsno:found_rooms,devicesno:found_devices});
-
-            });
-
-          });
+          var red='/profile?username='+req.session.username;
+          res.redirect(red);
         });
 
+
+    },
+
+    viewProfile:function(req,res){
+      var params = req.allParams();
+      User.findOne({username:params.username}).exec(function(err,user){
+        if(err){
+          return res.negotiate(err);
+        }
+        Room.count({createdBy:user.username}).exec(function(err,found_rooms){
+          Device.count({createdBy:user.username}).exec(function(err,found_devices){
+
+            res.view('profile',{username:user.username,email:user.email,address:user.address,phone:user.phone,roomsno:found_rooms,devicesno:found_devices});
+
+          });
+
+        });
+      });
     },
 
     getRegister:function(req,res){

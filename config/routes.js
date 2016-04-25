@@ -52,7 +52,11 @@ module.exports.routes = {
 
   'get /roomDetails':'RoomController.roomDetails',
 
-  'post /editprofile':'UserController.update'
+  'post /editprofile':'UserController.update',
+
+  'post /adddevice':'DeviceController.addDevice',
+
+  'get /profile':'UserController.viewProfile'
 
   /***************************************************************************
   *                                                                          *

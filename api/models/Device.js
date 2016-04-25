@@ -23,6 +23,9 @@ module.exports = {
     status:{
       type:'string'
     },
+    usage:{
+      type:'string'
+    },
     createdBy:{
       type:'string'
     }

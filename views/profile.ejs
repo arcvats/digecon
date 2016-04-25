@@ -38,7 +38,7 @@ body{
                         <div class="col-xs-12 col-sm-4">
                             <h2><strong><%=devicesno%></strong></h2>
                             <p><small>Devices Available</small></p>
-                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-plus-circle"></span> Add Devices </button>
+                            <button type="button" class="btn btn-primary btn-block" onclick='User.adddevice(<%-JSON.stringify(username)%>)' data-toggle="modal" data-target="#myModal2"><span class="fa fa-plus-circle"></span> Add Devices </button>
                         </div>
                         <!--/col-->
                     </div>
@@ -57,7 +57,7 @@ body{
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Edit Profile</h4>
       </div>
       <form method="post" action="/editprofile">
       <div class="modal-body">
@@ -81,10 +81,66 @@ body{
   </div>
 </div>
 
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel2">Add Device</h4>
+      </div>
+      <form method="post" action="/adddevice">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <input type="number" name="unit" class="form-control" id="unit" placeholder="Units">
+          </div>
+          <div class="form-group">
+            <label for="unittype">Unit Type</label>
+            <select class="form-control" name="unittype">
+              <option value="w">Watt</option>
+              <option value="kw">Kilo Watt</option>
+            </select>
+          </div>
+          <input type="hidden" name="status" value="active" id="status">
+          <div class="form-group">
+            <label for="usage">Daily Usage</label>
+            <select class="form-control" name="usage">
+              <option value="4h">4 Hrs</option>
+              <option value="5h">5 Hrs</option>
+              <option value="6h">6 Hrs</option>
+              <option value="8h">8 Hrs</option>
+              <option value="10h">10 Hrs</option>
+              <option value="12h">12 Hrs</option>
+              <option value="14h">14 Hrs</option>
+              <option value="16h">16 Hrs</option>
+              <option value="18h">18 Hrs</option>
+              <option value="20h">20 Hrs</option>
+              <option value="24h">24 Hrs</option>
+            </select>
+          </div>
+          <input type="hidden" name="createdBy" value="" id="created">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
   var User = {
     editprofile:function(username){
       document.getElementById('username_change').setAttribute("value",username);
+    },
+    adddevice:function(user){
+      document.getElementById('created').setAttribute("value",user);
     }
   };
 </script>
