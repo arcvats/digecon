@@ -28,6 +28,12 @@ module.exports = {
     },
     createdBy:{
       type:'string'
+    },
+    dailyamount:{
+      type:'float'
+    },
+    roomId:{
+      type:'string'
     }
   }
 };

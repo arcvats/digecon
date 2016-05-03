@@ -1,9 +1,31 @@
 <style>
 body{
   background-color: #5bc0de;
+  padding-top: 70px;
 }
 </style>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DIGICON</a>
+    </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="well panel panel-default">
@@ -20,6 +42,7 @@ body{
                             <p><strong>Phone: </strong>
                                 <%=phone%>
                             </p>
+
                         </div>
                         <!--/col-->
                         <div class="clearfix"></div>
@@ -92,7 +115,18 @@ body{
         <div class="modal-body">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+            <select class="form-control" name="name" id="name">
+              <option value="led10">LED 10W</option>
+              <option value="led15">LED 15W</option>
+              <option value="light100">Light 100W</option>
+              <option value="light40">Light 40W</option>
+              <option value="fan">FAN</option>
+              <option value="ac1">AC 1T</option>
+              <option value="ac15">AC 1.5T</option>
+              <option value="tvled30">LED TV(30in)</option>
+              <option value="tvled42">LED TV(42in)</option>
+              <option value="tvlcd">LCD TV</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="unit">Unit</label>
@@ -123,6 +157,16 @@ body{
             </select>
           </div>
           <input type="hidden" name="createdBy" value="" id="created">
+          <input type="hidden" name="dailyamount" value="" id="dailyamount">
+          <div class="form-group">
+            <label for="roomid">Room ID</label>
+            <select class="form-control" name="roomId">
+              <option value="room1">ROOM 1</option>
+              <option value="room2">ROOM 2</option>
+              <option value="room3">ROOM 3</option>
+              <option value="room4">ROOM 4</option>
+            </select>
+          </div>
         </div>
 
         <div class="modal-footer">

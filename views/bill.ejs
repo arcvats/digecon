@@ -1,0 +1,54 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+  google.charts.load('current',{'packages':['corechart']});
+
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var datas = <%-JSON.stringify(data_arr)%>;
+    arr=[];
+    arr.push(['Date','Amount']);
+    for(var j = 0;j<datas.length;j++){
+      arr2 = [];
+      arr2.push(datas[j].date.split('T')[0]);
+      arr2.push(datas[j].amount);
+      arr.push(arr2);
+    }
+
+    var data = google.visualization.arrayToDataTable(arr);
+
+    var data2 = google.visualization.arrayToDataTable([
+      ['Devices','Budgets'],
+      ['AC',<%-budget[0]%>],
+      ['TV',<%-budget[1]%>],
+      ['Fan',<%-budget[2]%>],
+      ['Lights',<%-budget[3]%>]
+    ]);
+
+    var options = {
+      title: 'Device Performance',
+      hAxis: {title: 'Date', titleTextStyle: {color: '#333'}},
+      vAxis: {minValue:0},
+      animation:{
+        duration:3000,
+        easing:'linear',
+        startup:true
+      }
+    };
+
+    var options2 = {
+      title:'Individual Budget',
+      is3D:true
+    }
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data,options);
+
+    var chart = new google.visualization.AreaChart(document.getElementById('budget_chart'));
+    chart.draw(data2,options2);
+
+  }
+
+</script>
+

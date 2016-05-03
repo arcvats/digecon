@@ -50,17 +50,15 @@ module.exports = {
             if(err){
               return res.negotiate(err);
             }
-            console.log("updated");
           });
 
-          console.log("updated");
           res.redirect('/rooms');
         });
       });
     },
 
     viewRoom:function(req,res){
-      Room.find({}).exec(function(err,rooms){
+      Room.find({createdBy:req.session.username}).exec(function(err,rooms){
         if(err){
           return res.negotiate(err);
         }
@@ -82,8 +80,6 @@ module.exports = {
 
     roomDetails:function(req,res){
       var params = req.allParams();
-      console.log(params.roomid);
-      console.log(req.session.username);
 
       Room.findOne({createdBy:req.session.username}).where({roomId:params.roomid}).exec(function(err,data){
         if(err){

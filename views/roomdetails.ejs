@@ -1,14 +1,98 @@
 <style>
   body{
-    background-color: #95d6dd;
+    background-color: #5bc0de;
+    padding-top: 70px;
   }
   .thumbnail{
     background-color: #dbf0f9;
   }
 </style>
 
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DIGICON</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href=<%="/profile?username="+req.session.username%>>Profile <span class="sr-only">(current)</span></a></li>
+        <li><a href="/rooms">Rooms</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+  <div class="col-md-8">
+    <h3>Welcome <%=username.toUpperCase()%>. You are viewing <%=name%></h3>
+  </div>
+</div>
+
 <div class="row" id="row">
-  <h3>Welcome <%=username.toUpperCase()%>. You are viewing <%=name%></h3>
+</div>
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel2">Edit Device</h4>
+      </div>
+      <form method="post" action="/adddevice">
+        <div class="modal-body">
+          <input type="hidden" value="" id="namevalue" name="name">
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <input type="number" name="unit" class="form-control" id="unit" placeholder="Units">
+          </div>
+          <div class="form-group">
+            <label for="unittype">Unit Type</label>
+            <select class="form-control" name="unittype">
+              <option value="w">Watt</option>
+              <option value="kw">Kilo Watt</option>
+            </select>
+          </div>
+          <input type="hidden" name="status" value="active" id="status">
+          <div class="form-group">
+            <label for="usage">Daily Usage</label>
+            <select class="form-control" name="usage">
+              <option value="4h">4 Hrs</option>
+              <option value="5h">5 Hrs</option>
+              <option value="6h">6 Hrs</option>
+              <option value="8h">8 Hrs</option>
+              <option value="10h">10 Hrs</option>
+              <option value="12h">12 Hrs</option>
+              <option value="14h">14 Hrs</option>
+              <option value="16h">16 Hrs</option>
+              <option value="18h">18 Hrs</option>
+              <option value="20h">20 Hrs</option>
+              <option value="24h">24 Hrs</option>
+            </select>
+          </div>
+          <input type="hidden" name="createdBy" value="" id="created">
+          <input type="hidden" name="dailyamount" value="" id="dailyamount">
+          <input type="hidden" name="roomId" value="" id="roomidvalue">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <script>
   (function(){
@@ -44,11 +128,14 @@
         var ele7 = document.createElement('p');
         ele4.appendChild(ele7);
 
-        var ele8 = document.createElement('a');
-        ele8.href = "#";
+        var ele8 = document.createElement('button');
+
+        ele8.setAttribute('onclick','Rooms.editdevice(<%-JSON.stringify(username)%>,<%-JSON.stringify(name)%>,'+JSON.stringify(devices[i])+')');
         ele8.setAttribute("class","btn btn-primary");
-        ele8.setAttribute("role","button");
-        ele8.innerHTML = "View";
+        ele8.setAttribute("type","button");
+        ele8.setAttribute("data-toggle","modal");
+        ele8.setAttribute("data-target","#myModal2");
+        ele8.innerHTML = "Edit";
         ele7.appendChild(ele8);
 
         var ele9 = document.createElement('a');
@@ -91,10 +178,12 @@
         ele4.appendChild(ele7);
 
         var ele8 = document.createElement('a');
-        ele8.href = "#";
+        ele8.setAttribute('onclick','Rooms.editdevice(<%-JSON.stringify(username)%>,<%-JSON.stringify(name)%>,'+JSON.stringify(devices[i])+')');
         ele8.setAttribute("class","btn btn-primary");
-        ele8.setAttribute("role","button");
-        ele8.innerHTML = "View";
+        ele8.setAttribute("type","button");
+        ele8.setAttribute("data-toggle","modal");
+        ele8.setAttribute("data-target","#myModal2");
+        ele8.innerHTML = "Edit";
         ele7.appendChild(ele8);
 
         var ele9 = document.createElement('a');
@@ -135,10 +224,12 @@
         ele4.appendChild(ele7);
 
         var ele8 = document.createElement('a');
-        ele8.href = "#";
+        ele8.setAttribute('onclick','Rooms.editdevice(<%-JSON.stringify(username)%>,<%-JSON.stringify(name)%>,'+JSON.stringify(devices[i])+')');
         ele8.setAttribute("class","btn btn-primary");
-        ele8.setAttribute("role","button");
-        ele8.innerHTML = "View";
+        ele8.setAttribute("type","button");
+        ele8.setAttribute("data-toggle","modal");
+        ele8.setAttribute("data-target","#myModal2");
+        ele8.innerHTML = "Edit";
         ele7.appendChild(ele8);
 
         var ele9 = document.createElement('a');
@@ -179,10 +270,12 @@
         ele4.appendChild(ele7);
 
         var ele8 = document.createElement('a');
-        ele8.href = "#";
+        ele8.setAttribute('onclick','Rooms.editdevice(<%-JSON.stringify(username)%>,<%-JSON.stringify(name)%>,'+JSON.stringify(devices[i])+')');
         ele8.setAttribute("class","btn btn-primary");
-        ele8.setAttribute("role","button");
-        ele8.innerHTML = "View";
+        ele8.setAttribute("type","button");
+        ele8.setAttribute("data-toggle","modal");
+        ele8.setAttribute("data-target","#myModal2");
+        ele8.innerHTML = "Edit";
         ele7.appendChild(ele8);
 
         var ele9 = document.createElement('a');
@@ -195,5 +288,13 @@
     }
 
   })();
+
+  var Rooms={
+    editdevice:function(username,name,devicename){
+      document.getElementById('namevalue').setAttribute('value',devicename);
+      document.getElementById('roomidvalue').setAttribute('value',name);
+      document.getElementById('created').setAttribute('value',username);
+    }
+  };
 </script>
 
