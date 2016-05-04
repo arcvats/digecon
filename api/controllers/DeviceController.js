@@ -23,7 +23,7 @@ module.exports = {
         }
         usage = params.usage.split('h')[0];
 
-        totalamount = eval(amount*usage*8.5);
+        totalamount = eval(amount*usage*4.9);
 
         params.dailyamount = totalamount;
 
@@ -36,6 +36,37 @@ module.exports = {
         res.redirect(red);
       });
 
+    },
+
+    getReports:function(req,res){
+      Device.find({createdBy:req.session.username}).exec(function(err,data){
+        if(err){
+          return res.negotiate(err);
+        }
+        var devices = [];
+        for(var i=0;i<data.length;i++){
+          if(data[i].roomId=='room1'){
+            devices.push(data[i]);
+          }
+        }
+        for(var i=0;i<data.length;i++){
+          if(data[i].roomId=='room2'){
+            devices.push(data[i]);
+          }
+        }
+        for(var i=0;i<data.length;i++){
+          if(data[i].roomId=='room3'){
+            devices.push(data[i]);
+          }
+        }
+        for(var i=0;i<data.length;i++){
+          if(data[i].roomId=='room4'){
+            devices.push(data[i]);
+          }
+        }
+        res.view('report',{data_arr:devices});
+
+      });
     },
 
     deleteDevice:function(req,res){

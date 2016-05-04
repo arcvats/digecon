@@ -1,0 +1,322 @@
+<style>
+  body{
+    background-color: #5bc0de;
+    padding-top: 70px;;
+  }
+  #main{
+    background-color:#fff ;
+  }
+  #charting{
+    background-color: #fff;
+  }
+  .jumbotron{
+    background-color: #fff;
+  }
+</style>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DIGICON</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="jumbotron" id="main">
+  <h4>Device Wise Usage</h4>
+  <table class="table table-striped table-responsive table-bordered">
+    <tr>
+      <th>S.No</th>
+      <th>Device Name</th>
+      <th>Installed In</th>
+      <th>Consumption</th>
+      <th>Usage Per Day</th>
+      <th>Amount Daily</th>
+      <th>Weekly Amount</th>
+      <th>Monthly Amount</th>
+    </tr>
+    <%for(var i=0;i<data_arr.length;i++){%>
+    <tr>
+      <td><%=i+1%></td>
+      <td><%=data_arr[i].name%></td>
+      <td><%=data_arr[i].roomId%></td>
+      <td><%=data_arr[i].unit%> <%=data_arr[i].unittype%></td>
+      <td><%=data_arr[i].usage%></td>
+      <td><%=data_arr[i].dailyamount.toFixed(2)%></td>
+      <td><%=(data_arr[i].dailyamount*7).toFixed(2)%></td>
+      <td><%=(data_arr[i].dailyamount*30).toFixed(2)%></td>
+    </tr>
+    <%}%>
+  </table>
+  <h4>Room Wise Usage</h4>
+  <table class="table table-striped table-responsive table-bordered">
+    <tr>
+      <th>S.No</th>
+      <th>Room ID</th>
+      <th>No of Devices</th>
+      <th>Amount Daily</th>
+      <th>Weekly Amount</th>
+      <th>Monthly Amount</th>
+    </tr>
+    <% var count1=0,count2=0,count3=0,count4=0,amounts1=0,amounts2=0,amounts3=0,amounts4=0;
+    for(var i=0;i<data_arr.length;i++) {
+      if (data_arr[i].roomId == 'room1') {
+        count1++;
+        amounts1 = amounts1 + data_arr[i].dailyamount;
+      }
+      if (data_arr[i].roomId == 'room2') {
+        count2++;
+        amounts2 = amounts2 + data_arr[i].dailyamount;
+      }
+      if (data_arr[i].roomId == 'room3') {
+        count3++;
+        amounts3 = amounts3 + data_arr[i].dailyamount;
+      }
+      if (data_arr[i].roomId == 'room4') {
+        count4++;
+        amounts4 = amounts4 + data_arr[i].dailyamount;
+      }
+    }%>
+    <tr>
+      <td>1</td>
+      <td>room1</td>
+      <td><%=count1%></td>
+      <td><%=amounts1.toFixed(2)%></td>
+      <td><%=(amounts1*7).toFixed(2)%></td>
+      <td><%=(amounts1*30).toFixed(2)%></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>room2</td>
+      <td><%=count2%></td>
+      <td><%=amounts2.toFixed(2)%></td>
+      <td><%=(amounts2*7).toFixed(2)%></td>
+      <td><%=(amounts2*30).toFixed(2)%></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>room3</td>
+      <td><%=count3%></td>
+      <td><%=amounts3.toFixed(2)%></td>
+      <td><%=(amounts3*7).toFixed(2)%></td>
+      <td><%=(amounts3*30).toFixed(2)%></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>room4</td>
+      <td><%=count4%></td>
+      <td><%=amounts4.toFixed(2)%></td>
+      <td><%=(amounts4*7).toFixed(2)%></td>
+      <td><%=(amounts4*30).toFixed(2)%></td>
+    </tr>
+  </table>
+</div>
+
+<div class="jumbotron" id="charting">
+  <h3>Performance Analysis</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="columnchart_material1" style="width: 500px; height: 400px;"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="columnchart_material2" style="width: 500px; height: 400px;"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="columnchart_material3" style="width: 500px; height: 400px;"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="columnchart_material4" style="width: 500px; height: 400px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="jumbotron">
+  <h3>Comparitive Analysis</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="columnchart_material5" style="width: 500px; height: 400px;"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="piechart" style="width: 600px; height: 500px;"></div>
+
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+
+
+  var datas = <%-JSON.stringify(data_arr)%>;
+  var arra=[];
+  var arrb=[];
+  var arrc=[];
+  var arrd=[];
+  arra.push(['Device', 'Daily', 'Weekly', 'Monthly']);
+  arrb.push(['Device', 'Daily', 'Weekly', 'Monthly']);
+  arrc.push(['Device', 'Daily', 'Weekly', 'Monthly']);
+  arrd.push(['Device', 'Daily', 'Weekly', 'Monthly']);
+
+
+  for(var j = 0;j<datas.length;j++) {
+    if(datas[j].roomId=='room1') {
+
+      var arr1 = [];
+      arr1.push(datas[j].name);
+      arr1.push(datas[j].dailyamount);
+      arr1.push(datas[j].dailyamount*7);
+      arr1.push(datas[j].dailyamount*30);
+      arra.push(arr1);
+    }
+    if(datas[j].roomId=='room2') {
+
+      var arr2 = [];
+      arr2.push(datas[j].name);
+      arr2.push(datas[j].dailyamount);
+      arr2.push(datas[j].dailyamount*7);
+      arr2.push(datas[j].dailyamount*30);
+      arrb.push(arr2);
+    }
+    if(datas[j].roomId=='room3') {
+
+      var arr3 = [];
+      arr3.push(datas[j].name);
+      arr3.push(datas[j].dailyamount);
+      arr3.push(datas[j].dailyamount*7);
+      arr3.push(datas[j].dailyamount*30);
+      arrc.push(arr3);
+    }
+    if(datas[j].roomId=='room4') {
+
+      var arr4 = [];
+      arr4.push(datas[j].name);
+      arr4.push(datas[j].dailyamount);
+      arr4.push(datas[j].dailyamount*7);
+      arr4.push(datas[j].dailyamount*30);
+      arrd.push(arr4);
+    }
+  }
+  var light_amount=0,fan_amount=0,tv_amount=0,ac_amount=0;
+  for(var i = 0;i<datas.length;i++){
+    if(datas[i].name=='led10'||datas[i].name=='led15'||datas[i].name=='light100'||datas[i].name=='light40'){
+      light_amount = light_amount + datas[i].dailyamount;
+    }
+    if(datas[i].name=='fan'){
+      fan_amount = fan_amount + datas[i].dailyamount;
+    }
+    if(datas[i].name=='ac1'||datas[i].name=='ac15'){
+      ac_amount = ac_amount + datas[i].dailyamount;
+    }
+    if(datas[i].name=='tvlcd'||datas[i].name=='tvled30'||datas[i].name=='tvled42'){
+      tv_amount = tv_amount + datas[i].dailyamount;
+    }
+  }
+
+  google.charts.load('current', {'packages':['bar','corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data1 = google.visualization.arrayToDataTable(arra);
+    var data2 = google.visualization.arrayToDataTable(arrb);
+    var data3 = google.visualization.arrayToDataTable(arrc);
+    var data4 = google.visualization.arrayToDataTable(arrd);
+    var data5 = google.visualization.arrayToDataTable([
+      ['Room','Daily','Weekly','Monthly'],
+      ['Room 1',<%=amounts1%>,<%=amounts1*7%>,<%=amounts1*30%>],
+      ['Room 2',<%=amounts2%>,<%=amounts2*7%>,<%=amounts2*30%>],
+      ['Room 3',<%=amounts3%>,<%=amounts3*7%>,<%=amounts3*30%>],
+      ['Room 4',<%=amounts4%>,<%=amounts4*7%>,<%=amounts4*30%>]
+    ]);
+
+    var data6 = google.visualization.arrayToDataTable([
+      ['Device Type', 'Usage per Day'],
+      ['Lights',     light_amount],
+      ['Fan',      fan_amount],
+      ['AC',  ac_amount],
+      ['TV', tv_amount]
+    ]);
+
+    var options6 = {
+      title: 'Comparitive Usage',
+      is3D:true
+    };
+
+
+
+    var options1 = {
+      chart: {
+        title: 'Room 1 Performance',
+        subtitle: 'Daily, Weekly, and Monthly Expense',
+      }
+    };
+    var options2 = {
+      chart: {
+        title: 'Room 2 Performance',
+        subtitle: 'Daily, Weekly, and Monthly Expense',
+      }
+    };
+    var options3 = {
+      chart: {
+        title: 'Room 3 Performance',
+        subtitle: 'Daily, Weekly, and Monthly Expense',
+      }
+    };
+    var options4 = {
+      chart: {
+        title: 'Room 4 Performance',
+        subtitle: 'Daily, Weekly, and Monthly Expense',
+      }
+    };
+
+    var options5 = {
+      chart: {
+        title: 'Overall Performance',
+        subtitle: 'Daily, Weekly, and Monthly Expense',
+      }
+    };
+
+    var chart1 = new google.charts.Bar(document.getElementById('columnchart_material1'));
+    var chart2 = new google.charts.Bar(document.getElementById('columnchart_material2'));
+    var chart3 = new google.charts.Bar(document.getElementById('columnchart_material3'));
+    var chart4 = new google.charts.Bar(document.getElementById('columnchart_material4'));
+    var chart5 = new google.charts.Bar(document.getElementById('columnchart_material5'));
+    var chart6 = new google.visualization.PieChart(document.getElementById('piechart'));
+
+
+
+    chart1.draw(data1, options1);
+    chart2.draw(data2, options2);
+    chart3.draw(data3, options3);
+    chart4.draw(data4, options4);
+    chart5.draw(data5, options5);
+    chart6.draw(data6, options6);
+
+  }
+
+
+</script>
+
+
+<script>
+  var Amount={
+
+  }
+</script>

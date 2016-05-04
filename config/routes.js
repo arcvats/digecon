@@ -56,7 +56,11 @@ module.exports.routes = {
 
   'post /adddevice':'DeviceController.addDevice',
 
-  'get /profile':'UserController.viewProfile'
+  'get /profile':'UserController.viewProfile',
+
+  'get /logout':'UserController.logout',
+
+  'get /reports':'DeviceController.getReports'
 
   /***************************************************************************
   *                                                                          *
