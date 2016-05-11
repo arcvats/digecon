@@ -1,0 +1,90 @@
+<style>
+  body{
+    background-color: #5bc0de;
+    padding-top: 70px;;
+  }
+  .jumbotron{
+    background-color: #fff;
+  }
+</style>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DIGICON</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href=<%="/profile?username="+req.session.username%>>Profile <span class="sr-only">(current)</span></a></li>
+        <li><a href="/rooms">Rooms</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="jumbotron" id="est">
+  <h3>Estimations and Predictions</h3>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class=" panel panel-info">
+        <div class="panel-heading">
+          Enter Day(>8)
+        </div>
+        <div class="panel-body">
+          <div class="input-group row">
+            <input type="number" class="form-control" id="get_est" style="width:200px;margin-left: 50px;">
+            <button class="btn btn-success" onclick="Estimation.getEstimation();" style="border: none;">Get</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Description
+        </div>
+        <div class="panel-body">
+         The Values below are base on linear regression and mean analysis.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="jumbotron">
+  <h3>Account Balance:</h3>
+</div>
+<script>
+  var Estimation = {
+    getEstimation: function () {
+      var value = document.getElementById('get_est').value;
+      aja()
+        .method('get')
+        .url('/getestimation')
+        .data({future: value})
+        .on('200', function (response) {
+          var ele= document.getElementById('est');
+          var ele1 = document.createElement('h3');
+          ele1.innerHTML = 'Prediction by Linear Regression is '+response.res1+'. Prediction by Mean analysis is '+response.re2;
+          ele.appendChild(ele1);
+
+        })
+        .go();
+    }
+  };
+</script>
+
+

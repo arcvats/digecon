@@ -28,6 +28,10 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href=<%="/profile?username="+req.session.username%>>Profile <span class="sr-only">(current)</span></a></li>
+        <li><a href="/rooms">Rooms</a></li>
+      </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/logout">Logout</a></li>
@@ -147,7 +151,7 @@
 </div>
 
 <div class="jumbotron">
-  <h3>Comparitive Analysis</h3>
+  <h3>Comparative Analysis</h3>
   <div class="row">
     <div class="col-md-6">
       <div id="columnchart_material5" style="width: 500px; height: 400px;"></div>
@@ -158,6 +162,61 @@
     </div>
 
   </div>
+</div>
+
+<div class="jumbotron">
+  <h3>Budget and Estimation</h3>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class=" panel panel-info">
+        <div class="panel-heading">
+          Set Budget
+        </div>
+        <div class="panel-body">
+          <div class="input-group row">
+            <input type="number" class="form-control" id="budget_set" style="width:200px;margin-left: 50px;">
+            <button class="btn btn-success" onclick="Analysis.setBudget();" style="border: none;">Set</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Description
+        </div>
+        <div class="panel-body">
+          The charts below show the budget set by the user, actual approximated usage and the difference chart of both.
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div id='piechart_before' style='width: 400px;height: 500px;'></div>
+    </div>
+    <div class="col-md-4">
+      <div id='piechart_after' style='width: 400px;height: 500px;'></div>
+    </div>
+    <div class="col-md-4">
+      <div id='piechart_diff' style='width: 400px;height: 500px;'></div>
+    </div>
+
+  </div>
+  <div class="row" id="bind_me" style="display: none">
+
+  </div>
+
+
+</div>
+
+<div class="jumbotron">
+  <div align="center">
+ <a href="/estimations" class="btn btn-lg btn-primary">View More Estimations</a>
+    </div>
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -255,7 +314,7 @@
     ]);
 
     var options6 = {
-      title: 'Comparitive Usage',
+      title: 'Comparative Usage',
       is3D:true
     };
 
@@ -316,7 +375,76 @@
 
 
 <script>
-  var Amount={
+  var Analysis={
+    setBudget:function(){
+      var value = document.getElementById('budget_set').value;
+      aja()
+        .method('get')
+        .url('/setbudget')
+        .data({budget:value})
+        .on('200', function(response){
+
+          var differences = [];
+          differences.push(ac_amount*30-parseFloat(response.budgets[0]));
+          differences.push(tv_amount*30-parseFloat(response.budgets[1]));
+          differences.push(fan_amount*30-parseFloat(response.budgets[2]));
+          differences.push(light_amount*30-parseFloat(response.budgets[3]));
+          var bind_ele = document.getElementById('bind_me');
+          bind_ele.style.display='inline';
+          var dev_bind =['AC','TV','Fan','Lights'];
+          for(var x=0;x<4;x++){
+            if(differences[x]>0){
+              var a = document.createElement('p');
+              a.setAttribute('class','bg-danger');
+              a.setAttribute('style','padding:10px');
+              a.innerHTML=dev_bind[x]+' usage in all rooms combined is '+(differences[x]/30).toFixed(2)+' INR more than your budget per day.<br> Decrease your usage by '+(differences[x]/(30*4.8)).toFixed(2)+' hours per day.';
+              bind_ele.appendChild(a);
+            }
+            if(differences[x]<0){
+              var a = document.createElement('p');
+              a.setAttribute('class','bg-success');
+              a.setAttribute('style','padding:10px');
+              a.innerHTML=dev_bind[x]+' usage in all rooms combined is '+Math.abs(differences[x]/30).toFixed(2)+' INR less than your budget per day.';
+              bind_ele.appendChild(a);
+            }
+
+          }
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+
+            var oldData = google.visualization.arrayToDataTable([
+              ['Device', 'Individual Budgets'],
+              ['AC',     parseFloat(response.budgets[0])],
+              ['TV',      parseFloat(response.budgets[1])],
+              ['Fan', parseFloat(response.budgets[2])],
+              ['Light', parseFloat(response.budgets[3])]
+
+            ]);
+
+            var newData = google.visualization.arrayToDataTable([
+              ['Device', 'Individual Budgets'],
+              ['AC',  ac_amount*30],
+              ['TV', tv_amount*30],
+              ['Fan',      fan_amount*30],
+              ['Lights',     light_amount*30]
+            ]);
+
+            var optionsdiff = { pieSliceText: ''};
+
+
+            var chartBefore = new google.visualization.PieChart(document.getElementById('piechart_before'));
+            var chartAfter = new google.visualization.PieChart(document.getElementById('piechart_after'));
+            var chartDiff = new google.visualization.PieChart(document.getElementById('piechart_diff'));
+
+            chartBefore.draw(oldData, optionsdiff);
+            chartAfter.draw(newData, optionsdiff);
+            var diffData = chartDiff.computeDiff(oldData, newData);
+            chartDiff.draw(diffData, optionsdiff);
+          }
+
+        })
+        .go();
+    }
 
   }
 </script>

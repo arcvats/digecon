@@ -60,7 +60,14 @@ module.exports.routes = {
 
   'get /logout':'UserController.logout',
 
-  'get /reports':'DeviceController.getReports'
+  'get /reports':'DeviceController.getReports',
+
+  'get /setbudget':'BillsController.budgetPrediction',
+
+  'get /estimations':'BillsController.estimation',
+  
+  'get /getestimation':'BillsController.estimations'
+
 
   /***************************************************************************
   *                                                                          *

@@ -65,7 +65,7 @@ module.exports = {
 
             }
             console.log("created rooms");
-            
+
           });
 
             res.view('login');
@@ -92,6 +92,8 @@ module.exports = {
       });
       res.redirect('/login');
     },
+
+  
 
     logout:function(req,res){
         req.session.username=null;

@@ -36,6 +36,7 @@ var jsFilesToInject = [
   'bower_components/angular-route/angular-route.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'bower_components/bootstrap/dist/js/bootstrap.js',
+  'bower_components/jquery.payment/lib/jquery.payment.min.js',
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
