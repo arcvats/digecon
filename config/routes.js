@@ -65,8 +65,23 @@ module.exports.routes = {
   'get /setbudget':'BillsController.budgetPrediction',
 
   'get /estimations':'BillsController.estimation',
-  
-  'get /getestimation':'BillsController.estimations'
+
+  'get /getestimation':'BillsController.estimations',
+
+  'post /paybill':'BillsController.paybill',
+
+  'post /prepaidusage':'HardwareController.prepaidusage',
+
+  'get /temp':'HardwareController.temp',
+
+  'get /toggle':'HardwareController.toggle',
+
+  'get /connect':'HardwareController.connect',
+
+  'get /turnonac':'HardwareController.turnonac',
+
+  'get /turnacoff':'HardwareController.turnacoff'
+
 
 
   /***************************************************************************

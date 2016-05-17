@@ -40,9 +40,9 @@
 
     <div class="col-md-4">
       <div class=" panel panel-info">
-        <div class="panel-heading">
-          Enter Day(>8)
-        </div>
+            <div class="panel-heading">
+               Enter Day(>8)
+             </div>
         <div class="panel-body">
           <div class="input-group row">
             <input type="number" class="form-control" id="get_est" style="width:200px;margin-left: 50px;">
@@ -51,7 +51,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="col-md-8">
       <div class="panel panel-success">
         <div class="panel-heading">
@@ -62,10 +61,103 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+</div>
 
 <div class="jumbotron">
-  <h3>Account Balance:</h3>
+  <h4 id="tanzee">Bill Amount:1256.89</h4>
+  <button class="btn btn-primary" id="pay-bill" data-toggle="modal" data-target="#myModal">Pay Bill</button>
+</div>
+
+<div class="jumbotron">
+  <form method="post" action="/prepaidusage">
+    <label for="amount">Amount</label>
+    <input type="number" class="form-control" name="prepaidamount" style="width:200px;">
+    <input type="submit" class="btn btn-success" value="Recharge">
+
+  </form>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Pay Bill</h4>
+      </div>
+
+        <div class="panel panel-default credit-card-box">
+          <div class="panel-heading display-table" >
+            <div class="row display-tr" >
+              <h3 class="panel-title display-td" >Payment Details</h3>
+              <div class="display-td" >
+                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="cardNumber">CARD NUMBER</label>
+                    <div class="input-group">
+                      <input
+                        type="tel"
+                        class="form-control"
+                        name="cardNumber"
+                        placeholder="Valid Card Number"
+                        autocomplete="cc-number"
+                        required autofocus
+                      />
+                      <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-7 col-md-7">
+                  <div class="form-group">
+                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      name="cardExpiry"
+                      placeholder="MM / YY"
+                      autocomplete="cc-exp"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-xs-5 col-md-5 pull-right">
+                  <div class="form-group">
+                    <label for="cardCVC">CV CODE</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      name="cardCVC"
+                      placeholder="CVC"
+                      autocomplete="cc-csc"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row" style="display:none;">
+                <div class="col-xs-12">
+                  <p class="payment-errors"></p>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" onclick="Estimation.remove()" data-dismiss="modal">Pay</button>
+        </div>
+    </div>
+  </div>
 </div>
 <script>
   var Estimation = {
@@ -78,11 +170,15 @@
         .on('200', function (response) {
           var ele= document.getElementById('est');
           var ele1 = document.createElement('h3');
-          ele1.innerHTML = 'Prediction by Linear Regression is '+response.res1+'. Prediction by Mean analysis is '+response.re2;
+          ele1.innerHTML = 'Prediction by Linear Regression is '+(response.res1).toFixed(2)+'. Prediction by Mean analysis is '+response.res2;
           ele.appendChild(ele1);
 
         })
         .go();
+    },
+    remove:function(){
+      var ele = document.getElementById('tanzee');
+      document.removeChild(ele);
     }
   };
 </script>

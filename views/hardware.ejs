@@ -1,0 +1,214 @@
+<style>
+  body {
+    background-color: #5bc0de;
+    padding-top: 70px;
+  }
+</style>
+<script>
+  (function(){
+    aja()
+      .method('get')
+      .url('/connect')
+      .on('200', function(response){
+        var msg = response.message;
+        console.log(msg);
+      })
+      .go();
+  })();
+</script>
+<div class="container" style="width:100%;">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center"><h3>Welcome <%=req.session.username%></h3></a>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="thumbnail" style="height:200px;">
+        <span>Get the Current Temperature.</span><br>
+        <button onclick="tempsensor();" class="btn-primary btn">Click</button>
+        <div id="temperature" class="chip" style="visibility: hidden;"></div><br><br>
+        <div class="white-text" id="ac-on"></div>
+        <button class="btn btn-primary" onclick="turnacoff();" id="turnacoff" style="display: none;">Turn Off AC</button>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="thumbnail" style="height:200px;">
+        <span>Control Your Appliance.(Light)</span><br>
+        <button onclick="lighttoggle();" class="btn btn-primary" id="light">LightOn</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="thumbnail" style="height:200px;">
+        <span>Generate Usage Statistics.</span><br>
+        <button onclick="displayreport();" class="btn btn-primary">Current Usage</button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card-panel teal" style="height:200px;">
+        <span class="white-text" id="usage">Stats are displayed here.</span>
+        <label id="minutes" style="visibility: hidden;font-size: 16px;" class="white-text">00</label><label id="colon" class="white-text" style="visibility: hidden;">:</label><label id="seconds" class="white-text" style="visibility: hidden;font-size: 16px;">00</label>
+        <br>
+        <label id="moneycurr" class="white-text" style="visibility: hidden;">Rs</label>&nbsp;
+
+        <label id="money" class="white-text" style="visibility: hidden;"></label>
+      </div>
+
+    </div>
+  </div>
+  <div id="chartContainer" style="width:100%; height:280px"></div>
+</div>
+<script>
+  function tempsensor(){
+    aja()
+      .method('get')
+      .url('/temp')
+      .on('200', function(response){
+        var temp=response.temper+" C";
+        var msg = response.msg;
+        document.getElementById('temperature').setAttribute('style','visibility:visible');
+        document.getElementById('temperature').innerHTML=temp;
+        if(parseInt(temp)>25){
+          turnonac();
+          document.getElementById('ac-on').innerHTML="AC is on since temperature is greater than 25 C and is "+temp;
+        }
+      })
+      .go();
+
+  }
+
+  function turnonac(){
+    aja()
+      .method('get')
+      .url('/turnonac')
+      .on('200', function (response) {
+        var msg = response.mess;
+        document.getElementById('turnacoff').setAttribute('style','display:block');
+      })
+      .go();
+  }
+
+  function turnacoff(){
+    aja()
+      .method('get')
+      .url('/turnacoff')
+      .on('200', function (response) {
+        var msg = response.mess;
+        document.getElementById('turnacoff').setAttribute('style','display:none');
+        document.getElementById('ac-on').innerHTML="AC is turned OFF";
+
+      })
+      .go();
+  }
+  function lighttoggle(){
+    if(document.getElementById('light').innerHTML=="LightOn") {
+      aja()
+        .method('get')
+        .url('/toggle')
+        .data({ledvalue: 'off'})
+        .on('200', function (response) {
+          var msg = response.message;
+          document.getElementById('light').innerHTML = msg;
+        })
+        .go();
+      getreport();
+
+    }
+    if(document.getElementById('light').innerHTML=="LightOff"){
+      aja()
+        .method('get')
+        .url('/toggle')
+        .data({ledvalue: 'on'})
+
+        .on('200', function (response) {
+          var msg = response.message;
+          document.getElementById('light').innerHTML = msg;
+        })
+        .go();
+      clearInterval(x);
+
+    }
+  }
+
+  function getreport() {
+
+    minutesLabel = document.getElementById("minutes");
+    secondsLabel = document.getElementById("seconds");
+    totalSeconds = 0;
+    addchart();
+    x=setInterval(setTime, 1000);
+
+
+
+
+  }
+  function setTime() {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+    money=parseFloat(totalSeconds)*0.15;
+
+    document.getElementById("money").innerHTML=money;
+
+  }
+  function pad(val) {
+    valString = val + "";
+    if (valString.length < 2) {
+      return "0" + valString;
+    }
+    else {
+      return valString;
+    }
+  }
+
+  function displayreport(){
+    if(document.getElementById('light').innerHTML=="LightOff") {
+      document.getElementById("usage").innerHTML = "Time: ";
+
+      document.getElementById("minutes").setAttribute("style", "visibility:visible");
+      document.getElementById("seconds").setAttribute("style", "visibility:visible");
+      document.getElementById("colon").setAttribute("style", "visibility:visible");
+      document.getElementById("money").setAttribute("style", "visibility:visible");
+      document.getElementById("moneycurr").setAttribute("style", "visibility:visible");
+
+
+
+    }
+    else
+      document.getElementById("usage").innerHTML = "Led is OFF Currently";
+
+  }
+
+  function addchart() {
+    var chart = new CanvasJS.Chart("chartContainer", {
+      title: {
+        text: "Showing Money Dynamically"
+      },
+      data: [
+        {
+          type: "spline",
+          dataPoints: [
+            { y: 0 },
+            { y: 1 }
+          ]
+        }
+      ]
+    });
+    chart.render();
+
+    y=setInterval(function(){
+
+
+        var length = chart.options.data[0].dataPoints.length;
+        chart.options.data[0].dataPoints.push({ y: money});
+        chart.render();
+
+
+    },3000);
+
+  }
+</script>
