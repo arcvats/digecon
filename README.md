@@ -1,3 +1,3 @@
-# final_review
+# Dig-e-Con
 
-a [Sails](http://sailsjs.org) application
+A simple user dashboard to monitor electricity usage.
