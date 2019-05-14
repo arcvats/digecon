@@ -22,7 +22,7 @@ After installation and configuration run:
 
 ## Built Using
 
-Node.js, Express.js, Angular.js, MongoDB, Mongoose, Gulp, Stylus and Bulma CSS
+Node.js, Sails.js, EJS, MongoDB, Google Chart API, JohnnyFive, Canvas.js, aja.js and LESS
 
 ## Contributing
 
